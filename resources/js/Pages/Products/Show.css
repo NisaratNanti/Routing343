@@ -1,0 +1,50 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff; /* เพิ่มพื้นหลัง */
+  }
+
+  .product-image {
+    max-width: 100%;
+    height: 300px;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border-radius: 8px;
+  }
+
+  .product-name {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 15px;
+  }
+
+  .product-description {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 10px;
+  }
+
+  .product-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 20px;
+  }
+
+  .back-link {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #6c757d;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+  }
+
+  .back-link:hover {
+    background-color: #5a6268; /* สีที่เข้มขึ้นเมื่อ hover */
+  }
