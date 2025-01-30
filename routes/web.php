@@ -1,46 +1,38 @@
 <?php
 
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ChirpController;
+
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\EmployeeController; 
 
+Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
+// Route::resource('employee', EmployeeController::class) ->only(['index'])
 
-Route::get('/', function () {   //เส้นทางไปยังหน้าแรก laravel
+Route::get('/', function () {
     return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),  //ไปยังหน้าล็อกอิน
-        'canRegister' => Route::has('register'), //ไปยังหน้าลงทะเบียน
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
 });
 
-Route::get('/dashboard', function () {  //ไปยังหน้าdashboard
+Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () { //หน้าโปรไฟล์
+Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('chirps', ChirpController::class)
-    ->only(['index', 'store', 'update', 'destroy']) //เพิ่ม index', 'store', 'update', 'destroy เข้าไป
-    ->middleware(['auth', 'verified']);
-Route::resource('product', ProductController::class)
-    ->only(['index', 'show',])  //นี่คือการเลือกเฉพาะสองฟังก์ชันคือ index (แสดงรายการทั้งหมดของสินค้า) และ show (แสดงรายละเอียดสินค้าเฉพาะตัว) เท่านั้นที่จะถูกกำหนดเส้นทาง
-    ->middleware(['auth', 'verified']);
+// หน้าแบบฟอร์มสำหรับเพิ่มข้อมูลพนักงาน
+Route::get('/employees/create', [EmployeeController::class, 'create']) ->name('employees.create');
 
-Route::get('/greeting', function () {
-        return 'Hello World';
-    });
-Route::get('/user', [UserController::class, 'index']);
-Route::get('/products', [ProductController::class, 'index']);
-Route::get('/products/{id}', [ProductController::class, 'show']);
-
+// Function เส้นทางสำหรับบันทึกข้อมูลพนักงาน
+Route::post('/employees', [EmployeeController::class, 'store']) ->name('employees.store');
 
 require __DIR__.'/auth.php';
